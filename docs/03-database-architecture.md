@@ -8,7 +8,7 @@ The database should support a production-style web application while remaining s
 
 ## Technology
 
-- Database engine: PostgreSQL
+- Database engine: PostgreSQL 18
 - Local development: Docker Compose PostgreSQL
 - Production: Amazon RDS PostgreSQL
 - ORM: Entity Framework Core
