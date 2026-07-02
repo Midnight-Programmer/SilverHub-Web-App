@@ -46,7 +46,7 @@ tools/
 ```
 
 The Angular frontend is a peer project at `src/SilverHub.Web` (see Doc 04). The
-solution file `SilverHub.sln` and the API `Dockerfile` live at the repository
+solution file `SilverHub.slnx` and the API `Dockerfile` live at the repository
 root; the Dockerfile build context is the repository root so it can restore from
 the committed `.csproj` files.
 
