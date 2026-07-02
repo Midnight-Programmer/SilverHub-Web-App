@@ -8,8 +8,9 @@ The frontend should be structured as a production-style single-page application 
 
 ## Technology choices
 
-- Framework: Angular
+- Framework: Angular 22
 - Language: TypeScript
+- Build/test tooling: Node.js 24 (Active LTS)
 - Styling: Tailwind CSS (primary) + Angular Material for complex controls only
 - Hosting: S3 + CloudFront
 - Testing: Angular unit/component tests and Playwright end-to-end tests
@@ -68,7 +69,9 @@ If a public route changes, add redirect handling where practical.
 
 ## Folder structure
 
-Recommended frontend structure:
+The Angular application lives at `src/SilverHub.Web/` in the monorepo; its
+production build output is `dist/SilverHub.Web/browser`. Within the project, the
+standard Angular layout applies:
 
 ```text
 src/

@@ -9,8 +9,8 @@ The backend should be organized like a production-style ASP.NET Core application
 ## Technology choices
 
 - Language: C#
-- Runtime/framework: ASP.NET Core
-- Database access: Entity Framework Core
+- Runtime/framework: ASP.NET Core on .NET 10 (LTS)
+- Database access: Entity Framework Core 10
 - Database provider: PostgreSQL via Npgsql
 - API style: REST-ish JSON API
 - API documentation: OpenAPI/Swagger
@@ -44,6 +44,11 @@ tools/
   SilverHub.ContentImport/
   SilverHub.GearOptimizationBench/
 ```
+
+The Angular frontend is a peer project at `src/SilverHub.Web` (see Doc 04). The
+solution file `SilverHub.sln` and the API `Dockerfile` live at the repository
+root; the Dockerfile build context is the repository root so it can restore from
+the committed `.csproj` files.
 
 ## Layer responsibilities
 
@@ -378,7 +383,7 @@ Approach:
 - Use centralized validation response formatting.
 - Return ProblemDetails-compatible errors.
 
-Validator classes live in `SilverHub.Application` next to the DTO they validate. Validators are auto-registered via assembly scanning. Validation runs through ASP.NET Core's model binding pipeline so failures produce `400 Bad Request` with ProblemDetails before reaching handlers.
+Validator classes live in `SilverHub.Application` next to the DTO they validate and are registered via assembly scanning. FluentValidation's built-in ASP.NET Core auto-validation is deprecated, so validators are invoked explicitly through a validation filter in the API pipeline that runs before the handler and produces `400 Bad Request` with ProblemDetails on failure.
 
 Validation location:
 
