@@ -1,0 +1,66 @@
+# ─────────────────────────────────────────────────────────────
+# SilverHub .gitignore
+# Covers: .NET build output, IDE files, Node/Angular, Terraform,
+# secrets/env, OS cruft, and local material.
+# ─────────────────────────────────────────────────────────────
+
+# --- .NET build output ---
+bin/
+obj/
+*.user
+*.suo
+artifacts/
+[Dd]ebug/
+[Rr]elease/
+# EF Core / tooling
+*.dbmdl
+
+# --- .NET test / coverage ---
+[Tt]est[Rr]esult*/
+coverage/
+*.coverage
+*.trx
+*.cobertura.xml
+
+# --- IDE / editor ---
+.vs/
+.vscode/*
+!.vscode/extensions.json      
+.idea/
+*.sln.iml
+
+# --- Node / Angular ---
+node_modules/
+dist/
+.angular/                     
+npm-debug.log*
+yarn-error.log*
+*.tsbuildinfo
+
+# --- Terraform ---
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars                      
+!example.tfvars               
+crash.log
+override.tf
+override.tf.json
+
+# --- Secrets / environment ---
+.env
+.env.*
+!.env.example
+appsettings.*.Local.json     
+*.pem
+*.key
+
+# --- Docker ---
+docker-compose.override.yml
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+#  Local Material
+/local/
