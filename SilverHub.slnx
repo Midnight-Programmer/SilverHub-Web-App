@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SilverHub.Api/SilverHub.Api.csproj" />
+    <Project Path="src/SilverHub.Application/SilverHub.Application.csproj" />
+    <Project Path="src/SilverHub.Domain/SilverHub.Domain.csproj" />
+    <Project Path="src/SilverHub.Infrastructure/SilverHub.Infrastructure.csproj" />
+  </Folder>
+</Solution>
