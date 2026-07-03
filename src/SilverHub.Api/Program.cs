@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using SilverHub.Infrastructure;
+using SilverHub.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +24,11 @@ builder.Services.AddProblemDetails(options =>
     };
 });
 
+builder.Services.AddInfrastructure(builder.Configuration);
+
 builder.Services.AddHealthChecks()
-    .AddCheck("self", () => HealthCheckResult.Healthy(), tags: ["live"]);
+    .AddCheck("self", () => HealthCheckResult.Healthy(), tags: ["live"])
+    .AddDbContextCheck<SilverHubDbContext>("database", tags: ["ready"]);
 
 // Swagger/OpenAPI is exposed in Development and Staging only (Doc 02); Production skips it entirely.
 var enableOpenApi = builder.Environment.IsDevelopment() || builder.Environment.IsStaging();
