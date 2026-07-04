@@ -1,5 +1,10 @@
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using SilverHub.Application;
+using SilverHub.Infrastructure;
+using SilverHub.Infrastructure.Persistence;
+using SilverHub.Infrastructure.Persistence.Dev;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +27,12 @@ builder.Services.AddProblemDetails(options =>
     };
 });
 
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
+
 builder.Services.AddHealthChecks()
-    .AddCheck("self", () => HealthCheckResult.Healthy(), tags: ["live"]);
+    .AddCheck("self", () => HealthCheckResult.Healthy(), tags: ["live"])
+    .AddDbContextCheck<SilverHubDbContext>("database", tags: ["ready"]);
 
 // Swagger/OpenAPI is exposed in Development and Staging only (Doc 02); Production skips it entirely.
 var enableOpenApi = builder.Environment.IsDevelopment() || builder.Environment.IsStaging();
@@ -33,6 +42,15 @@ if (enableOpenApi)
 }
 
 var app = builder.Build();
+
+// Local dev convenience: apply migrations and seed sample data. Never runs in Production.
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<SilverHubDbContext>();
+    await db.Database.MigrateAsync();
+    await DevDataSeeder.SeedAsync(db);
+}
 
 if (!app.Environment.IsDevelopment())
 {

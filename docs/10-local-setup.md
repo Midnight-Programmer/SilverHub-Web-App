@@ -30,9 +30,44 @@ git clone https://github.com/Midnight-Programmer/SilverHub-Web-App.git
 cd SilverHub-Web-App
 ```
 
-Then follow the section for the part you want to run:
+## Running locally
 
-- **Local database** — _(added in Task 2)_
-- **Backend API** — _(added in Task 1–2)_
-- **Frontend** — _(added in Task 3)_
-- **Full stack, end to end** — _(added in Task 4)_
+### 1. Start the database
+
+```bash
+docker compose up -d --wait
+```
+
+Starts Postgres 18 (exposed on host port `5433`) and waits until it is healthy.
+Stop it with `docker compose down` — add `-v` to also delete the data volume and
+start fresh next time.
+
+### 2. Run the backend API
+
+```bash
+dotnet tool restore                       # first time only: restores dotnet-ef
+dotnet run --project src/SilverHub.Api
+```
+
+The API listens on **http://localhost:5173**. In Development it automatically
+applies EF Core migrations and seeds sample heroes on startup, so a running
+database is the only prerequisite.
+
+Endpoints to try:
+
+| URL | What it is |
+|---|---|
+| <http://localhost:5173/health/live> | Liveness (process is up) |
+| <http://localhost:5173/health/ready> | Readiness (can reach the database) |
+| <http://localhost:5173/api/v1/heroes> | Hero list (JSON) |
+| <http://localhost:5173/openapi/v1.json> | OpenAPI document (Development/Staging only) |
+
+To apply migrations without starting the API:
+
+```bash
+dotnet ef database update --project src/SilverHub.Infrastructure --startup-project src/SilverHub.Api
+```
+
+### 3. Frontend — _(added in Task 3)_
+
+### 4. Full stack, end to end — _(added in Task 4)_
