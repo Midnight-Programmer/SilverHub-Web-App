@@ -24,4 +24,23 @@ public sealed class HeroesController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpGet("options")]
+    public async Task<IActionResult> GetOptions(
+        [FromServices] GetHeroOptionsHandler handler,
+        CancellationToken ct)
+    {
+        var result = await handler.HandleAsync(ct);
+        return Ok(result);
+    }
+
+    [HttpGet("{slug}")]
+    public async Task<IActionResult> GetBySlug(
+        [FromRoute] string slug,
+        [FromServices] GetHeroBySlugHandler handler,
+        CancellationToken ct = default)
+    {
+        var hero = await handler.HandleAsync(slug, ct);
+        return hero is null ? NotFound() : Ok(hero);
+    }
 }
