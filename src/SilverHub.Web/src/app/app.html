@@ -1,2 +1,25 @@
-<h1 class="text-3xl font-bold text-indigo-600">SilverHub</h1>
-<router-outlet />
+<div class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+  <header class="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <a routerLink="/" class="text-xl font-bold tracking-tight text-indigo-600">SilverHub</a>
+      <nav class="flex gap-1 text-sm font-medium">
+        <a routerLink="/heroes" routerLinkActive="text-indigo-600"
+           class="rounded px-3 py-2 text-slate-600 hover:bg-slate-100">Heroes</a>
+        <a routerLink="/guides" routerLinkActive="text-indigo-600"
+           class="rounded px-3 py-2 text-slate-600 hover:bg-slate-100">Guides</a>
+        <a routerLink="/tools" routerLinkActive="text-indigo-600"
+           class="rounded px-3 py-2 text-slate-600 hover:bg-slate-100">Tools</a>
+        <a routerLink="/news" routerLinkActive="text-indigo-600"
+           class="rounded px-3 py-2 text-slate-600 hover:bg-slate-100">News</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
+    <router-outlet />
+  </main>
+
+  <footer class="border-t border-slate-200 py-6 text-center text-xs text-slate-400">
+    SilverHub — fan-made game knowledge &amp; tooling · build {{ appVersion }}
+  </footer>
+</div>
