@@ -1,0 +1,30 @@
+@let s = state();
+
+<div class="mb-6">
+  <h1 class="text-2xl font-bold tracking-tight text-slate-900">Heroes</h1>
+  <p class="text-sm text-slate-500">Browse all heroes.</p>
+</div>
+
+@if (s.status === 'loading') {
+  <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+    @for (i of skeletons; track i) {
+      <div class="animate-pulse rounded-xl border border-slate-200 bg-white p-3">
+        <div class="aspect-[3/4] w-full rounded-lg bg-slate-200"></div>
+        <div class="mt-2 h-4 w-2/3 rounded bg-slate-200"></div>
+        <div class="mt-1 h-3 w-1/2 rounded bg-slate-100"></div>
+      </div>
+    }
+  </div>
+} @else if (s.status === 'success') {
+  <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+    @for (hero of s.data; track hero.id) {
+      <app-hero-card [hero]="hero" />
+    }
+  </div>
+} @else if (s.status === 'empty') {
+  <p class="text-slate-500">No heroes found.</p>
+} @else if (s.status === 'error') {
+  <div class="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+    Couldn't load heroes: {{ s.message }}
+  </div>
+}
