@@ -5,4 +5,8 @@
     <Project Path="src/SilverHub.Domain/SilverHub.Domain.csproj" />
     <Project Path="src/SilverHub.Infrastructure/SilverHub.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SilverHub.Api.Tests/SilverHub.Api.Tests.csproj" />
+    <Project Path="tests/SilverHub.Domain.Tests/SilverHub.Domain.Tests.csproj" />
+  </Folder>
 </Solution>
