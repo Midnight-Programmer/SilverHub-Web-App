@@ -1,0 +1,14 @@
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
+.angular/
+.git/
+.github/
+.vs/
+.vscode/
+.playwright-mcp/
+local/
+tests/
+src/SilverHub.Web/
+*.md
