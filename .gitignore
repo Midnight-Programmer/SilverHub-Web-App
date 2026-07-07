@@ -62,5 +62,8 @@ docker-compose.override.yml
 .DS_Store
 Thumbs.db
 
+# --- Playwright MCP scratch ---
+.playwright-mcp/
+
 #  Local Material
 /local/
