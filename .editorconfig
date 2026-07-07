@@ -18,7 +18,7 @@ trim_trailing_whitespace = false
 csharp_style_namespace_declarations = file_scoped:warning
 csharp_style_var_for_built_in_types = false:suggestion
 csharp_style_var_when_type_is_apparent = true:suggestion
-csharp_prefer_braces = true:warning
+csharp_prefer_braces = when_multiline:warning
 dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
 dotnet_style_namespace_match_folder = true:suggestion
 csharp_using_directive_placement = outside_namespace:warning
@@ -31,3 +31,7 @@ dotnet_naming_rule.interfaces_start_with_i.style = i_prefix_style
 dotnet_naming_symbols.interface_symbol.applicable_kinds = interface
 dotnet_naming_style.i_prefix_style.required_prefix = I
 dotnet_naming_style.i_prefix_style.capitalization = pascal_case
+
+# EF Core-generated migrations: skip format/analyzer rules.
+[**/Migrations/*.cs]
+generated_code = true

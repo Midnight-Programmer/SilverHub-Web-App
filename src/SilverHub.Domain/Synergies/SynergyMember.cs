@@ -10,7 +10,7 @@ public enum SynergyRole
 
 public sealed class SynergyMember
 {
-    private SynergyMember() {}
+    private SynergyMember() { }
 
     public SynergyMember(Guid synergyId, Guid heroId, SynergyRole role, int sortOrder)
     {

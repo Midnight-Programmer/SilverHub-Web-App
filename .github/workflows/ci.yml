@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Restore
+        run: dotnet restore SilverHub.slnx
+      - name: Format check
+        run: dotnet format SilverHub.slnx --verify-no-changes
+      - name: Build
+        run: dotnet build SilverHub.slnx -c Release --no-restore
+      # Integration tests spin up a real Postgres via Testcontainers (Docker is
+      # available on the runner) and apply migrations, so this also verifies the
+      # migrations apply cleanly to a blank database.
+      - name: Test
+        run: dotnet test SilverHub.slnx -c Release --no-build
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/SilverHub.Web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: src/SilverHub.Web/package-lock.json
+      - name: Install
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: npm test -- --no-watch
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build API image
+        run: docker build -t silverhub-api:ci .

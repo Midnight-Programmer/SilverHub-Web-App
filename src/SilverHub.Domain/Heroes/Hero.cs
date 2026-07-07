@@ -10,7 +10,7 @@ public sealed class Hero
     private readonly List<HeroPreferredArtifact> _preferredArtifacts = new();
     private readonly List<SynergyMember> _synergyMemberships = new();
 
-    private Hero() {}
+    private Hero() { }
 
     public Hero(
         Guid id,
